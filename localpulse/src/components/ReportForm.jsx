@@ -7,6 +7,8 @@ function ReportForm({ onClose }) {
     
   const [category, setCategory] = useState("General");
   const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("Medium");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,15 +18,18 @@ function ReportForm({ onClose }) {
     navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
-    
+      const now = new Date();
       console.log("👤 UID:", auth.currentUser?.uid);
 
       const reportData = {
         uid: auth.currentUser.uid, // Required due to new rules
         category,
         message,
+        severity,
         lat,
         lng,
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString(),
         timestamp: new Date().toISOString(),
       };
 
@@ -71,6 +76,18 @@ function ReportForm({ onClose }) {
           <option value="Crime">Crime</option>
           <option value="Alert">Alert</option>
         </select>
+
+        <label className="block mb-2 text-sm">Severity</label>
+        <select
+          className="w-full mb-4 p-2 border rounded"
+          value={severity}
+          onChange={(e) => setSeverity(e.target.value)}
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+
 
         <label className="block mb-2 text-sm">Message</label>
         <textarea

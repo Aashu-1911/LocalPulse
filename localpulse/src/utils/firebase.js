@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";        // ✅ Use Realtime Database, not Firestore
 import { getAuth, signInAnonymously } from "firebase/auth";
 
+import { getFirestore } from "firebase/firestore";
+
 // ✅ These are your real config values — good!
 const firebaseConfig = {
   apiKey: "AIzaSyC7l5uPlF25TCjpH_RiB1a5xadl1t5ERdQ",
@@ -28,3 +30,5 @@ signInAnonymously(auth).catch((error) => {
 
 // 🔁 Export auth and database
 export { auth, database };
+// export const auth = getAuth(app);
+export const db = getFirestore(app);
